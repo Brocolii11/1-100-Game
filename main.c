@@ -11,6 +11,7 @@
  *   - "Higher" if the secret number is bigger than the guess
  *   - "Lower"  if the secret number is smaller than the guess
  *   - "Correct! You win!" when the player guesses the number
+ * At the end, the program shows how many valid attempts the player needed.
  */
 
 void print_intro(void)
@@ -20,7 +21,7 @@ void print_intro(void)
     printf("=============================================\n");
     printf("I have chosen a number between 1 and 100.\n");
     printf("Try to guess it! After each guess,\n");
-    printf("I will tell you if you: Higher, Lower, or Correct!\n");
+    printf("I will tell you if you were: Higher, Lower, or Correct.\n\n");
 }
 
 void print_outro(int attempts)
@@ -28,7 +29,8 @@ void print_outro(int attempts)
     printf("=============================================\n");
     printf("            Game Over - You Won!             \n");
     printf("=============================================\n");
-    printf("You guessed the number in %d attempts!\n", attempts, attempts == 1 ? "" : "s");
+    printf("You guessed the number in %d attempt%s.\n",
+           attempts, attempts == 1 ? "" : "s");
     printf("=============================================\n");
 }
 
@@ -39,6 +41,7 @@ int main(void)
      */
     int secret;
     int guess;
+    /* counts how many valid guesses the player has made */
     int attempts = 0;
 
     /*
@@ -83,9 +86,9 @@ int main(void)
             /* Skip the rest of this loop iteration and ask again. */
             continue;
         }
-        
-        /* If we reach here, the input was a valid number. */
-            attempts++;
+
+        /* If we reach here, the input was a valid number, so count it. */
+        attempts++;
         /*
          * Compare the player's guess to the secret number and
          * provide feedback or end the game.
