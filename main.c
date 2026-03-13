@@ -38,11 +38,13 @@ int main(void)
 {
     /* secret  = computer's hidden number
      * guess   = player's current guess
+     * attempts = count of valid guesses the player has made
+     * play_again = flag to determine if the player wants to play again
      */
     int secret;
     int guess;
-    /* counts how many valid guesses the player has made */
     int attempts = 0;
+    int play_again = 1;
 
     /*
      * Seed the pseudo‑random number generator with the current time.
@@ -108,6 +110,8 @@ int main(void)
             printf("Lower\n");
         }
     }
-
+    
+    printf("Press Enter to exit.\n");
+    getchar();
     return 0;
 }
