@@ -52,14 +52,18 @@ Without these includes, the compiler wouldn’t know about these functions.
 
 ---
 
-## 3. `main` function – entry point
+## 3. `main` function – entry point and variables
 
 ```c
 int main(void)
 {
-    /* secret: the computer's number; guess: the player's current guess */
+    /* secret  = computer's hidden number
+     * guess   = player's current guess
+     */
     int secret;
     int guess;
+    /* counts how many valid guesses the player has made */
+    int attempts = 0;
     ...
 }
 ```
@@ -69,6 +73,7 @@ int main(void)
 - **Local variables**:
   - `int secret;` → holds the secret number the computer chooses.
   - `int guess;` → holds the most recent guess from the player.
+  - `int attempts;` → counts how many **valid** guesses the player has entered.
 
 These variables only exist inside `main` (they are local to this function).
 
@@ -107,16 +112,63 @@ This gives us the secret number for the game.
 
 ---
 
-## 5. Greeting the player
+## 5. Intro and outro: explaining the game to the player
+
+To make the game nicer, we split some printing into **two helper functions**:
 
 ```c
-printf("I have chosen a number between 1 and 100.\n");
+void print_intro(void)
+{
+    printf("=============================================\n");
+    printf("            1 - 100 Guessing Game            \n");
+    printf("=============================================\n");
+    printf("I have chosen a number between 1 and 100.\n");
+    printf("Try to guess it! After each guess,\n");
+    printf("I will tell you if you were: Higher, Lower, or Correct.\n\n");
+}
+
+void print_outro(int attempts)
+{
+    printf("=============================================\n");
+    printf("            Game Over - You Won!             \n");
+    printf("=============================================\n");
+    printf("You guessed the number in %d attempt%s.\n",
+           attempts, attempts == 1 ? "" : "s");
+    printf("=============================================\n");
+}
 ```
 
-- `printf` prints text to the screen.
-- `\n` moves the cursor to the **next line** (newline).
+### 5.1 `print_intro`
 
-This line tells the player the rules of the range.
+- Called near the start of `main`:
+
+```c
+secret = (rand() % 100) + 1;
+print_intro();
+```
+
+- Purpose:
+  - Show a **title banner**.
+  - Explain the range (1–100) and basic rules.
+  - Make the game feel more polished and friendly.
+
+### 5.2 `print_outro`
+
+- Called when the player finally wins:
+
+```c
+if (guess == secret)
+{
+    printf("Correct! You win!\n");
+    print_outro(attempts);
+    break;
+}
+```
+
+- Purpose:
+  - Show a **"Game Over"** banner.
+  - Tell the player how many **attempts** it took.
+  - Use `"attempt"` vs `"attempts"` correctly with the `%s` trick.
 
 ---
 
@@ -270,7 +322,7 @@ else
 - The only remaining case is `guess > secret` (too big).
 - We print `"Lower"` to tell the player they need to guess a **smaller** number.
 
-This logic repeats until the `if (guess == secret)` branch triggers and breaks the loop.
+This logic repeats until the `if (guess == secret)` branch triggers and breaks the loop. At that point, `print_outro(attempts);` runs and shows how many guesses were needed.
 
 ---
 
