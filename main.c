@@ -12,6 +12,26 @@
  *   - "Lower"  if the secret number is smaller than the guess
  *   - "Correct! You win!" when the player guesses the number
  */
+
+void print_intro(void)
+{
+    printf("=============================================\n");
+    printf("            1 - 100 Guessing Game            \n");
+    printf("=============================================\n");
+    printf("I have chosen a number between 1 and 100.\n");
+    printf("Try to guess it! After each guess,\n");
+    printf("I will tell you if you: Higher, Lower, or Correct!\n");
+}
+
+void print_outro(int attempts)
+{
+    printf("=============================================\n");
+    printf("            Game Over - You Won!             \n");
+    printf("=============================================\n");
+    printf("You guessed the number in %d attempts!\n", attempts, attempts == 1 ? "" : "s");
+    printf("=============================================\n");
+}
+
 int main(void)
 {
     /* secret  = computer's hidden number
@@ -19,6 +39,7 @@ int main(void)
      */
     int secret;
     int guess;
+    int attempts = 0;
 
     /*
      * Seed the pseudo‑random number generator with the current time.
@@ -32,7 +53,7 @@ int main(void)
      */
     secret = (rand() % 100) + 1;
 
-    printf("I have chosen a number between 1 and 100.\n");
+    print_intro();
 
     /*
      * Main game loop.
@@ -62,7 +83,9 @@ int main(void)
             /* Skip the rest of this loop iteration and ask again. */
             continue;
         }
-
+        
+        /* If we reach here, the input was a valid number. */
+            attempts++;
         /*
          * Compare the player's guess to the secret number and
          * provide feedback or end the game.
@@ -70,6 +93,7 @@ int main(void)
         if (guess == secret)
         {
             printf("Correct! You win!\n");
+            print_outro(attempts);
             break;  /* Exit the while loop, ending the game. */
         }
         else if (guess < secret)
