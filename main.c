@@ -51,8 +51,12 @@ int main(void)
      * Without this, rand() would return the same sequence every run.
      */
     srand(time(NULL));
-
-    /*
+    while (play_again)
+    {
+        attempts = 0;
+        secret = ...;
+        
+        /*
      * Generate a number in the range [1, 100].
      * rand() % 100 gives a value in [0, 99]; +1 shifts it to [1, 100].
      */
@@ -64,7 +68,8 @@ int main(void)
      * Main game loop.
      * We use while (1) to loop indefinitely and break when the player wins.
      */
-    while (1)
+     
+     while (1)
     {
         printf("Enter your guess: ");
 
@@ -110,6 +115,10 @@ int main(void)
             printf("Lower\n");
         }
     }
+    }
+
+    
+    
     
     printf("Press Enter to exit.\n");
     getchar();
