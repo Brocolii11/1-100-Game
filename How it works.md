@@ -364,5 +364,5 @@ leave loop after correct guess
 return 0 and exit
 ```
 
-This file should give someone new to C (or new to this project) a clear mental model of **how the game works** and why each piece of code is there.
+
 
