@@ -54,7 +54,6 @@ int main(void)
     while (play_again)
     {
         attempts = 0;
-        secret = ...;
         
         /*
      * Generate a number in the range [1, 100].
